@@ -5,10 +5,6 @@ import com.example.authservice.filters.JsonUsernamePasswordAuthFilter;
 import com.example.authservice.filters.JwtAuthenticationOncePerRequestFilter;
 import com.example.authservice.filters.RefreshTokenAuthenticationOncePerRequestFilter;
 import com.example.authservice.filters.RefreshTokenAuthenticationProvider;
-import com.example.authservice.handlers.JwtAuthFailureHandler;
-import com.example.authservice.handlers.JwtAuthSuccessHandler;
-import com.example.authservice.services.JwtService;
-import com.example.authservice.services.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -38,23 +34,14 @@ public class AuthenticationConfig {
 
     @Bean
     public SecurityFilterChain security(
-            HttpSecurity http, AuthenticationManager authenticationManager,
-            JwtService jwtService, RefreshTokenService refreshTokenService) throws Exception {
-
-        // Login filter for /auth/login with json username and password
-        JsonUsernamePasswordAuthFilter loginFilter = new JsonUsernamePasswordAuthFilter(authenticationManager);
-        loginFilter.setAuthenticationSuccessHandler(new JwtAuthSuccessHandler(jwtService, refreshTokenService));
-        loginFilter.setAuthenticationFailureHandler(new JwtAuthFailureHandler());
-
-        // Refresh Token Filter to validate and refresh the token
-        RefreshTokenAuthenticationOncePerRequestFilter refreshFilter = new RefreshTokenAuthenticationOncePerRequestFilter(authenticationManager);
-
-        // Validate JWT token for all request that are marked with authenticated()
-        JwtAuthenticationOncePerRequestFilter jwtAuthenticationFilter = new JwtAuthenticationOncePerRequestFilter(jwtService);
+            HttpSecurity http, JsonUsernamePasswordAuthFilter loginFilter,
+            RefreshTokenAuthenticationOncePerRequestFilter refreshFilter,
+            JwtAuthenticationOncePerRequestFilter jwtAuthenticationFilter ) throws Exception {
 
         http.csrf(csrf -> csrf
                 .ignoringRequestMatchers("/h2-console/**", "/.well-known/jwks.json")
-                ).csrf(AbstractHttpConfigurer::disable)
+                )
+                .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm ->
