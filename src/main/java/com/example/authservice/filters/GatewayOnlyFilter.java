@@ -20,7 +20,7 @@ public class GatewayOnlyFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
-        return path.startsWith("/auth/") || path.startsWith("/.well-known");
+        return path.startsWith("/auth/") || path.startsWith("/.well-known") || path.startsWith("/h2-console");
     }
 
     @Override
