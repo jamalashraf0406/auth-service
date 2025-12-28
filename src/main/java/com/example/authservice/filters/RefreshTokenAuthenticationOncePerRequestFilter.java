@@ -33,6 +33,7 @@ public class RefreshTokenAuthenticationOncePerRequestFilter extends OncePerReque
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
             FilterChain chain ) throws IOException, ServletException {
 
+        log.info("Refresh Token Filter invoked...");
         String authHeader = request.getHeader(LoginParam.AUTHORIZATION.getParam());
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Missing refresh token");
