@@ -1,0 +1,37 @@
+POST /auth/login
+{
+"username": "jashraf07",
+"password": "password123"
+}
+
+Response:
+{
+    "accessToken": "eyJraWQiOiJhM2Y2YWEyOS03MDU5LTQ2OGMtYWU3MS1mNTA2ODRhYThiYjYiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJqYXNocmFmMDciLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc2NjY4NjAyMywiaXNzIjoiaHR0cDovL2F1dGgtc2VydmljZSIsImV4cCI6MTc2NjY4NjkyM30.n3zRDhBMcwXQBMEdzLRCnr-73NQud6_1GphrjEv0E7ddJgaMrMCa8ICmcG3PD1-G2w2O4-SDJqdvLcrzeMpBczr5-cc5IkHCiEeMPCyzk0tivW6--9f7ojeiZWhj9ovE4qG65l7SZue7u2VYVSbdXRb5MTGgi8P4cFpqIaiMZhhtJUutM307deZjyN5Rvz4rTqq2TibOXZqfXYjbYf45wYO7a8WpYcL1F7shGt_5881FjSLcgDU7QJrWgvuL46MuEwxJb1ZDz8J3XMcuY5sgf-EPhea5C-zBCfwyFcsi3PExL8nWs2T9_IyZbj2nKm-WS1edblmakiOkEATV5vmJVQ",
+    "refreshToken": "dz5pozNW5m0tDphvpcniD3X2Mec22MHe3eerG9Hk0nHbjIUV8htbbBnCc1vtYhPzknmkGz52ZCgjNMwLOTn85A",
+    "token_type": "Bearer"
+}
+---
+POST /auth/token/refresh
+Authorization: Bearer <refresh-token>
+X-Grant-Type: refresh_token
+
+Response:
+---
+{
+    "accessToken": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJoYW16YTAzMDYiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzY2Njc3NzQ3LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODIiLCJleHAiOjE3NjY2Nzg2NDd9.TA7I4XBDNjLGJvqPV0qWCYiXGpy_TTXnSQK1P11RS6Rx-ZzoRzaAWyyknwhQpoDOqVm43pW3HAcmfTswxbqa8xa3SlA2mVW0GzAzyxLhVDG3RwOfhE4ywNAmoIbn82yqwJ6D3ng9ngYsKhvlqMB8UBaVAbxOeN4nDaSWm5wxxX0dDoYdNxxJvBJHI3bycXD8PVFLlUtSnken5JJ0JxGG2HNCeQYZDp_4RtLq-hFhoOgRnnZmRaa2dfhZszzc-9pfC0T3V6Si9efw6wwJzdK0N_DMeDYnLJ_jOeEgF6OyNDC2TY3CCsJbACGW5Pu2sY8B0KNTlGtr7rcMxWl2OGiRKQ",
+    "tokenType": "Bearer"
+}
+
+POST
+curl -X POST http://localhost:7072/user/v1/create \
+       -H "Authorization: Bearer <ADMIN_ACCESS_TOKEN>" \
+       -H "Content-Type: application/json" \
+       -H "X-Gateway-Auth: gateway-secret-123"
+       -d '{"username":"john","password":"password123"}'
+
+Response:
+-----
+{
+"User created successfully"
+}
+
