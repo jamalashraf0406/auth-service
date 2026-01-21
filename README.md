@@ -25,7 +25,7 @@
    - Java 17 
    - Maven 3.x
    - Spring boot 3
-3. Once project downloaded in local and all toos install
+3. Once project downloaded in local and all tools installed
    - mvn clean install
    - java -jar target/auth-service-0.0.1-SNAPSHOT.jar
 4. Once Server up you can use the below API to test.
